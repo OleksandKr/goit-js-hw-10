@@ -1,7 +1,7 @@
-import '../css/styles.css';
-import API from './fetchCountries.js';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
+import API from './fetchCountries.js';
+import '../css/styles.css';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -16,11 +16,9 @@ refs.inputRef.addEventListener('input', debounce(onInputTime, DEBOUNCE_DELAY));
 function onInputTime(e) {
   e.preventDefault();
   const inputValue = e.target.value.trim();
-  if (!inputValue) {
-    resetMarkup(refs.countryListRef);
-    resetMarkup(refs.countryInfoRef);
-    return;
-  }
+  resetMarkup(refs.countryListRef);
+  resetMarkup(refs.countryInfoRef);
+  if (!inputValue) return;
 
   API.fetchCountries(inputValue)
     .then(result => {
@@ -29,18 +27,12 @@ function onInputTime(e) {
           'Too many matches found. Please enter a more specific name.'
         );
       } else if (result.length >= 2 && result.length <= 10) {
-        resetMarkup(refs.countryListRef);
         createMarkupListCountry(result);
-        resetMarkup(refs.countryInfoRef);
       } else {
-        resetMarkup(refs.countryInfoRef);
         createMarkupInfoCountry(result);
-        resetMarkup(refs.countryListRef);
       }
     })
     .catch(() => {
-      resetMarkup(refs.countryListRef);
-      resetMarkup(refs.countryInfoRef);
       Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 }
