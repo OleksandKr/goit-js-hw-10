@@ -37,6 +37,18 @@ function onInputTime(e) {
     });
 }
 
+//=== option with reduce ===//
+// function createMarkupListCountry(result) {
+//   const markup = result
+//     .reduce((acc, { name, flags }) => {
+//       return acc+ `<li class="item-country-list">
+//         <img class="list-img-country" src="${flags.svg}" alt="flag" />
+//         <p class="info-name-country">${name.official}</p>
+//       </li>`;
+//     }, '');
+//   return refs.countryListRef.insertAdjacentHTML('beforeend', markup);
+//}
+
 function createMarkupListCountry(result) {
   const markup = result
     .map(({ name, flags }) => {
